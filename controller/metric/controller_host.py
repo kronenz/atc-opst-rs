@@ -15,7 +15,6 @@ bp = Blueprint('metric_host', __name__, url_prefix='/metric/host')
 @bp.route('/cpu')
 def getCpuLoad15Min():
     conn = current_app.sdk_connection
-
     print(conn.auth_token)
 
     return {"hello": "world!"}

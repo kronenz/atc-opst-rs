@@ -6,7 +6,7 @@ import openstack as openstack
 # openstack.enable_logging(debug=True)
 openstack.enable_logging()
 
-from controller.metric import svc_host as sh
+from controller.metric import request_service as sh
 
 
 def create_app():

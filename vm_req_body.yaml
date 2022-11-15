@@ -1,5 +1,5 @@
 project_id: &pjid "925aba3de85a48ccb284bf02edc1c18e"
-VM_cpu: 
+vm_cpu: 
   body: {
     "operations": [
         "*",
@@ -36,7 +36,7 @@ VM_cpu:
   }
   granularity: 20  
 
-VM_vcpus:
+vm_vcpus:
   body: {
     "operations": [
         "metric",
@@ -61,7 +61,7 @@ VM_vcpus:
   }
   granularity: 20
 
-VM_memory:
+vm_memory:
   body: {
     "operations": [
         "metric",
@@ -86,7 +86,7 @@ VM_memory:
   }
   granularity: 20
 
-VM_memory.usage:
+vm_memory.usage:
   body: {
     "operations": [
         "metric",
@@ -111,7 +111,7 @@ VM_memory.usage:
   }
   granularity: 20
 
-VM_network.incoming.bytes:
+vm_network.incoming.bytes:
   body: {
     "operations": [
         "/",
@@ -144,7 +144,7 @@ VM_network.incoming.bytes:
   }
   granularity: 20
 
-VM_network.incoming.packets.error:
+vm_network.incoming.packets.error:
   body: {
     "operations": [
         "/",
@@ -177,7 +177,7 @@ VM_network.incoming.packets.error:
   }
   granularity: 20
 
-VM_network.incoming.packets.drop:
+vm_network.incoming.packets.drop:
   body: {
     "operations": [
         "/",
@@ -210,7 +210,7 @@ VM_network.incoming.packets.drop:
   }
   granularity: 20
 
-VM_network.incoming.packets:
+vm_network.incoming.packets:
   body: {
     "operations": [
         "/",
@@ -243,7 +243,7 @@ VM_network.incoming.packets:
   }
   granularity: 20
   
-VM_network.outgoing.bytes:
+vm_network.outgoing.bytes:
   body: {
     "operations": [
         "/",
@@ -276,7 +276,7 @@ VM_network.outgoing.bytes:
   }
   granularity: 20
   
-VM_network.outgoing.packets.drop:
+vm_network.outgoing.packets.drop:
   body: {
     "operations": [
         "/",
@@ -309,7 +309,7 @@ VM_network.outgoing.packets.drop:
   }
   granularity: 20
   
-VM_network.outgoing.packets.error:
+vm_network.outgoing.packets.error:
   body: {
     "operations": [
         "/",
@@ -342,7 +342,7 @@ VM_network.outgoing.packets.error:
   }
   granularity: 20
   
-VM_network.outgoing.packets:
+vm_network.outgoing.packets:
   body: {
     "operations": [
         "/",
@@ -375,7 +375,7 @@ VM_network.outgoing.packets:
   }
   granularity: 20
 
-VM_disk.root.size:
+vm_disk.root.size:
   body: {
     "operations": [
         "metric",
@@ -400,7 +400,7 @@ VM_disk.root.size:
   }
   granularity: 20
   
-VM_disk.ephemeral.size:
+vm_disk.ephemeral.size:
   body: {
     "operations": [
         "metric",
@@ -425,7 +425,7 @@ VM_disk.ephemeral.size:
   }
   granularity: 20
   
-VM_disk.device.allocation:
+vm_disk.device.allocation:
   body: {
     "operations": [
         "metric",
@@ -450,7 +450,7 @@ VM_disk.device.allocation:
   }
   granularity: 20
   
-VM_disk.device.capacity:
+vm_disk.device.capacity:
   body: {
     "operations": [
         "metric",
@@ -475,7 +475,7 @@ VM_disk.device.capacity:
   }
   granularity: 20
   
-VM_disk.device.usage:
+vm_disk.device.usage:
   body: {
     "operations": [
         "metric",
@@ -500,7 +500,7 @@ VM_disk.device.usage:
   }
   granularity: 20
   
-VM_disk.device.read.bytes:
+vm_disk.device.read.bytes:
   body: {
     "operations": [
         "/",
@@ -533,7 +533,7 @@ VM_disk.device.read.bytes:
   }
   granularity: 60
 
-VM_disk.device.read.latency:
+vm_disk.device.read.latency:
   body: {
     "operations": [
         "/",
@@ -566,7 +566,7 @@ VM_disk.device.read.latency:
   }
   granularity: 60
 
-VM_disk.device.read.requests:
+vm_disk.device.read.requests:
   body: {
     "operations": [
         "/",
@@ -599,7 +599,7 @@ VM_disk.device.read.requests:
   }
   granularity: 60
 
-VM_disk.device.write.bytes:
+vm_disk.device.write.bytes:
   body: {
     "operations": [
         "/",
@@ -632,7 +632,7 @@ VM_disk.device.write.bytes:
   }
   granularity: 60
 
-VM_disk.device.write.latency:
+vm_disk.device.write.latency:
   body: {
     "operations": [
         "/",
@@ -665,7 +665,7 @@ VM_disk.device.write.latency:
   }
   granularity: 60
 
-VM_disk.device.write.requests:
+vm_disk.device.write.requests:
   body: {
     "operations": [
         "/",

@@ -3,7 +3,7 @@ import json
 import yaml
 import pprint
 
-class RequestAPI:
+class request_api:
     ip_address = 0
     port = 0
     base_url = ''
