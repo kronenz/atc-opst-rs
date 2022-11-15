@@ -1,0 +1,297 @@
+Host_hardware.cpu.util: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.cpu.util",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+Host_hardware.cpu.load.15min: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.cpu.load.15min",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+Host_hardware.cpu.load.1min: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.cpu.load.1min",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+Host_hardware.cpu.load.5min: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.cpu.load.5min",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+Host_hardware.memory.buffer: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.memory.buffer",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+Host_hardware.memory.cached: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.memory.cached",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+Host_hardware.memory.swap.avail: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.memory.swap.avail",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+Host_hardware.memory.swap.total: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.memory.swap.total",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+Host_hardware.memory.total: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.memory.total",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+Host_hardware.memory.used: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.memory.used",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+Host_hardware.network.incoming.bytes: 
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "hardware.network.incoming.bytes",
+                "mean"
+            ]
+        ],
+        60
+    ],
+    "resource_type": "host_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+
+Host_hardware.network.outgoing.bytes: 
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "hardware.network.outgoing.bytes",
+                "mean"
+            ]
+        ],
+        60
+    ],
+    "resource_type": "host_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+
+Host_hardware.disk.size.total: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.disk.size.total",
+        "mean"
+    ],
+    "resource_type": "host_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+ 
+Host_hardware.disk.size.used: 
+  body: {
+    "operations": [
+        "metric",
+        "hardware.disk.size.used",
+        "mean"
+    ],
+    "resource_type": "host_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+
+

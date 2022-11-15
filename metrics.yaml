@@ -1,0 +1,6 @@
+metrics:
+  api:
+    ip: 192.168.15.40
+    port: 8041
+  host:
+    url: http://192.168.15.131:9000/ostck/topology/servers_on_hosts

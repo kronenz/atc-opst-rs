@@ -1,0 +1,700 @@
+project_id: &pjid "925aba3de85a48ccb284bf02edc1c18e"
+VM_cpu: 
+  body: {
+    "operations": [
+        "*",
+        [
+            "/",
+            [
+                "aggregate",
+                "rate:mean",
+                [
+                    "metric",
+                    "cpu",
+                    "mean"
+                ]
+            ],
+            20000000000.0
+        ],
+        100
+    ],
+    "resource_type": "instance",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20  
+
+VM_vcpus:
+  body: {
+    "operations": [
+        "metric",
+        "vcpus",
+        "mean"
+    ],
+    "resource_type": "instance",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+VM_memory:
+  body: {
+    "operations": [
+        "metric",
+        "memory",
+        "mean"
+    ],
+    "resource_type": "instance",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+VM_memory.usage:
+  body: {
+    "operations": [
+        "metric",
+        "memory.usage",
+        "mean"
+    ],
+    "resource_type": "instance",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+VM_network.incoming.bytes:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "network.incoming.bytes",
+                "mean"
+            ]
+        ],
+        20
+    ],
+    "resource_type": "instance_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+VM_network.incoming.packets.error:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "network.incoming.packets.drop",
+                "mean"
+            ]
+        ],
+        20
+    ],
+    "resource_type": "instance_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+VM_network.incoming.packets.drop:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "network.incoming.packets.drop",
+                "mean"
+            ]
+        ],
+        20
+    ],
+    "resource_type": "instance_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+VM_network.incoming.packets:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "network.incoming.packets",
+                "mean"
+            ]
+        ],
+        20
+    ],
+    "resource_type": "instance_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+  
+VM_network.outgoing.bytes:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "network.outgoing.bytes",
+                "mean"
+            ]
+        ],
+        20
+    ],
+    "resource_type": "instance_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+  
+VM_network.outgoing.packets.drop:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "network.outgoing.packets.drop",
+                "mean"
+            ]
+        ],
+        20
+    ],
+    "resource_type": "instance_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+  
+VM_network.outgoing.packets.error:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "network.outgoing.packets.error",
+                "mean"
+            ]
+        ],
+        20
+    ],
+    "resource_type": "instance_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+  
+VM_network.outgoing.packets:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "network.outgoing.packets",
+                "mean"
+            ]
+        ],
+        20
+    ],
+    "resource_type": "instance_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+VM_disk.root.size:
+  body: {
+    "operations": [
+        "metric",
+        "disk.root.size",
+        "mean"
+    ],
+    "resource_type": "instance",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+  
+VM_disk.ephemeral.size:
+  body: {
+    "operations": [
+        "metric",
+        "disk.ephemeral.size",
+        "mean"
+    ],
+    "resource_type": "instance",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+  
+VM_disk.device.allocation:
+  body: {
+    "operations": [
+        "metric",
+        "disk.device.allocation",
+        "mean"
+    ],
+    "resource_type": "instance_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+  
+VM_disk.device.capacity:
+  body: {
+    "operations": [
+        "metric",
+        "disk.device.capacity",
+        "mean"
+    ],
+    "resource_type": "instance_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+  
+VM_disk.device.usage:
+  body: {
+    "operations": [
+        "metric",
+        "disk.device.usage",
+        "mean"
+    ],
+    "resource_type": "instance_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+  
+VM_disk.device.read.bytes:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "disk.device.read.bytes",
+                "mean"
+            ]
+        ],
+        60
+    ],
+    "resource_type": "instance_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+
+VM_disk.device.read.latency:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "disk.device.read.latency",
+                "mean"
+            ]
+        ],
+        60
+    ],
+    "resource_type": "instance_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+
+VM_disk.device.read.requests:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "disk.device.read.requests",
+                "mean"
+            ]
+        ],
+        60
+    ],
+    "resource_type": "instance_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+
+VM_disk.device.write.bytes:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "disk.device.write.bytes",
+                "mean"
+            ]
+        ],
+        60
+    ],
+    "resource_type": "instance_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+
+VM_disk.device.write.latency:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "disk.device.write.latency",
+                "mean"
+            ]
+        ],
+        60
+    ],
+    "resource_type": "instance_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+
+VM_disk.device.write.requests:
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "disk.device.write.requests",
+                "mean"
+            ]
+        ],
+        60
+    ],
+    "resource_type": "instance_disk",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "project_id": *pjid
+                }
+            },
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+
