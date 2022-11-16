@@ -171,3 +171,10 @@ class get_disk_device_write_requests(Resource):
         auth_token = current_app.sdk_connection.auth_token
         data = rs.get_disk_device_write_requests(auth_token)
         return jsonify(data) 
+
+@vm_bp.route("/network_all")
+class get_network_all_requests(Resource):
+    def get(self):
+        auth_token = current_app.sdk_connection.auth_token
+        data = rs.get_network_all(auth_token)
+        return data 

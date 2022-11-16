@@ -1,4 +1,6 @@
 from controller.metric import request_service as rs
+from concurrent.futures import ThreadPoolExecutor
+from itertools import groupby
 
 class vm_service():
     rs = None
@@ -73,6 +75,39 @@ class vm_service():
 
     def get_disk_device_write_requests(self, auth_token):
         return self.rs.request_post('vm_disk.device.write.requests', auth_token)
+
+    def post_url(args):
+        return req
+
+    def get_network_all(self, auth_token):
+
+        key_list = []
+        key_list.append('vm_network.incoming.bytes')
+        key_list.append('vm_network.incoming.packets')
+        key_list.append('vm_network.incoming.packets.drop')
+        key_list.append('vm_network.incoming.packets.error')
+        key_list.append('vm_network.outgoing.bytes')
+        key_list.append('vm_network.outgoing.packets')
+        key_list.append('vm_network.outgoing.packets.drop')
+        key_list.append('vm_network.outgoing.packets.error')
+
+        result_list = self.rs.request_post_multi(key_list, auth_token, None)
+
+        base_dict = {}
+
+        for key_item in result_list: #키별 반복
+            for item in key_item:
+                measure_name = item['name']
+                original_resource_id = item['group']['original_resource_id']
+                measure_item = item['measures']
+
+                if not original_resource_id in base_dict:
+                    base_dict[original_resource_id]={}
+                base_dict[original_resource_id][measure_name]=measure_item
+                    
+
+        return base_dict
+
 
 
 
