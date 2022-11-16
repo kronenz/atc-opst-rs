@@ -8,14 +8,10 @@ openstack.enable_logging()
 
 from controller.metric import request_service as sh
 
-
 def create_app():
     app = Flask(__name__)
     app.sdk_connection = openstack.connect(cloud='admin')
     CORS(app)
-
-    hs = sh.HostService()
-    hs.getCpuLoad15Min(app.sdk_connection.auth_token)
 
     api = Api(app)  # Flask 객체에 Api 객체 등록
 
@@ -27,10 +23,13 @@ def create_app():
 
     api.add_namespace(autoscaling, '/api')
 
-    from controller.metric import controller_vm
-    app.register_blueprint(controller_vm.bp)
+    from controller.metric.controller_vm import vm_bp as vm
+    # app.register_blueprint(controller_vm.vm_bp)
+    api.add_namespace(vm, '/metric/vm')
+    from controller.metric.controller_host import host_bp as host
+    # app.register_blueprint(controller_host.host_bp)
+    api.add_namespace(host, '/metric/host')
 
-    from controller.metric import controller_host
-    app.register_blueprint(controller_host.bp)
-
+    print(app.url_map)
+    print(app.sdk_connection.auth_token)
     return app

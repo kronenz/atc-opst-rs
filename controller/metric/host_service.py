@@ -39,16 +39,16 @@ class host_service():
         return self.rs.request_post('hardware.memory.used', auth_token)  
 
     def get_net_in_bytes(self, auth_token):
-        return self.rs.request_post('hardware.network.incoming.bytes', auth_token)  
+        return self.rs.request_post_st('hardware.network.incoming.bytes', '2022-11-16T06:35:00')
 
     def get_net_out_bytes(self, auth_token):
-        return self.rs.request_post('hardware.network.outgoing.bytes', auth_token)  
+        return self.rs.request_post_st('hardware.network.outgoing.bytes','2022-11-16T06:35:00')
 
     def get_net_out_errors(self, auth_token):
-        return self.rs.request_post('hardware.network.outgoing.errors', auth_token)  
+        return self.rs.request_post_st('hardware.network.outgoing.errors','2022-11-16T06:35:00')
 
     def get_disk_size_total(self, auth_token):
-        return self.rs.request_post('hardware.disk.size.total', auth_token)  
+        return self.rs.request_post_st('hardware.disk.size.total', auth_token, '2022-11-16T06:35:00')  
 
     def get_disk_size_used(self, auth_token):
-        return self.rs.request_post('hardware.disk.size.used', auth_token)                                                               
+        return self.rs.request_post_st('hardware.disk.size.used', auth_token, '2022-11-16T06:35:00')                                                               

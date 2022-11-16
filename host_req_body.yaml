@@ -1,4 +1,4 @@
-Host_hardware.cpu.load.15min: 
+hardware.cpu.load.15min: 
   body: {
     "operations": [
         "metric",
@@ -18,7 +18,7 @@ Host_hardware.cpu.load.15min:
   }
   granularity: 20
 
-Host_hardware.cpu.load.1min: 
+hardware.cpu.load.1min: 
   body: {
     "operations": [
         "metric",
@@ -38,7 +38,7 @@ Host_hardware.cpu.load.1min:
   }
   granularity: 20
 
-Host_hardware.cpu.load.5min: 
+hardware.cpu.load.5min: 
   body: {
     "operations": [
         "metric",
@@ -58,7 +58,7 @@ Host_hardware.cpu.load.5min:
   }
   granularity: 20
   
-Host_hardware.cpu.util: 
+hardware.cpu.util: 
   body: {
     "operations": [
         "metric",
@@ -78,7 +78,27 @@ Host_hardware.cpu.util:
   }
   granularity: 20
 
-Host_hardware.memory.buffer: 
+hardware.system_stats.cpu.idle:
+  body: {
+    "operations": [
+        "metric",
+        "hardware.system_stats.cpu.idle",
+        "mean"
+    ],
+    "resource_type": "host",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 20
+
+hardware.memory.buffer: 
   body: {
     "operations": [
         "metric",
@@ -98,7 +118,7 @@ Host_hardware.memory.buffer:
   }
   granularity: 20
 
-Host_hardware.memory.cached: 
+hardware.memory.cached: 
   body: {
     "operations": [
         "metric",
@@ -118,7 +138,7 @@ Host_hardware.memory.cached:
   }
   granularity: 20
 
-Host_hardware.memory.swap.avail: 
+hardware.memory.swap.avail: 
   body: {
     "operations": [
         "metric",
@@ -138,7 +158,7 @@ Host_hardware.memory.swap.avail:
   }
   granularity: 20
 
-Host_hardware.memory.swap.total: 
+hardware.memory.swap.total: 
   body: {
     "operations": [
         "metric",
@@ -158,7 +178,7 @@ Host_hardware.memory.swap.total:
   }
   granularity: 20
 
-Host_hardware.memory.total: 
+hardware.memory.total: 
   body: {
     "operations": [
         "metric",
@@ -178,7 +198,7 @@ Host_hardware.memory.total:
   }
   granularity: 20
 
-Host_hardware.memory.used: 
+hardware.memory.used: 
   body: {
     "operations": [
         "metric",
@@ -198,7 +218,7 @@ Host_hardware.memory.used:
   }
   granularity: 20
 
-Host_hardware.network.incoming.bytes: 
+hardware.network.incoming.bytes: 
   body: {
     "operations": [
         "/",
@@ -226,7 +246,7 @@ Host_hardware.network.incoming.bytes:
   }
   granularity: 60
 
-Host_hardware.network.outgoing.bytes: 
+hardware.network.outgoing.bytes: 
   body: {
     "operations": [
         "/",
@@ -254,7 +274,7 @@ Host_hardware.network.outgoing.bytes:
   }
   granularity: 60
 
-Host_hardware.disk.size.total: 
+hardware.disk.size.total: 
   body: {
     "operations": [
         "metric",
@@ -274,7 +294,7 @@ Host_hardware.disk.size.total:
   }
   granularity: 60
  
-Host_hardware.disk.size.used: 
+hardware.disk.size.used: 
   body: {
     "operations": [
         "metric",
