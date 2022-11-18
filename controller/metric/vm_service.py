@@ -124,15 +124,19 @@ class vm_service():
 
         base_dict = {}
         print(result_list)
+
         for key_item in result_list: #키별 반복
             for item in key_item:
                 measure_name = item['name']
-                original_resource_id = item['group']['project_id']
+                project_id=item['group']['project_id']
+                original_resource_id = item['group']['id']
                 measure_item = item['measures']
 
-                if not original_resource_id in base_dict:
-                    base_dict[original_resource_id]={}
-                base_dict[original_resource_id][measure_name]=measure_item
+                if not project_id in base_dict:
+                    base_dict[project_id]={}
+                if not original_resource_id in base_dict[project_id]:
+                    base_dict[project_id][original_resource_id]={}
+                    base_dict[project_id][original_resource_id][measure_name]=measure_item
 
         return base_dict
 
