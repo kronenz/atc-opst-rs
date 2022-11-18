@@ -108,6 +108,33 @@ class vm_service():
 
         return base_dict
 
+    def get_network_all_proejct(self, auth_token):
+        rsin = rs.req_service('vm_req_body_project_id.yaml')
+        key_list = []
+        key_list.append('vm_network.incoming.bytes')
+        key_list.append('vm_network.incoming.packets')
+        key_list.append('vm_network.incoming.packets.drop')
+        key_list.append('vm_network.incoming.packets.error')
+        key_list.append('vm_network.outgoing.bytes')
+        key_list.append('vm_network.outgoing.packets')
+        key_list.append('vm_network.outgoing.packets.drop')
+        key_list.append('vm_network.outgoing.packets.error')
+
+        result_list = rsin.request_post_multi_proejct_all(key_list, auth_token, None)
+
+        base_dict = {}
+        print(result_list)
+        for key_item in result_list: #키별 반복
+            for item in key_item:
+                measure_name = item['name']
+                original_resource_id = item['group']['project_id']
+                measure_item = item['measures']
+
+                if not original_resource_id in base_dict:
+                    base_dict[original_resource_id]={}
+                base_dict[original_resource_id][measure_name]=measure_item
+
+        return base_dict
 
 
 
