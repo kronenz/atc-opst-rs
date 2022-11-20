@@ -129,7 +129,7 @@ class vm_service():
             for item in key_item:
                 measure_name = item['name']
                 project_id=item['group']['project_id']
-                original_resource_id = item['group']['id']
+                original_resource_id = item['group']['original_resource_id']
                 measure_item = item['measures']
 
                 if not project_id in base_dict:
