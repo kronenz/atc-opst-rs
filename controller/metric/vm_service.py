@@ -1,11 +1,15 @@
 from controller.metric import request_service as rs
 from concurrent.futures import ThreadPoolExecutor
 from itertools import groupby
+from controller.metric import post_elk as pe
+import json
 
 class vm_service():
     rs = None
+    poste = None
     def __init__(self):
         self.rs = rs.req_service('vm_req_body.yaml')
+        self.poste = pe.post_elk()
 
     def get_cpu(self, auth_token):
         return self.rs.request_post('vm_cpu', auth_token)
@@ -123,7 +127,6 @@ class vm_service():
         result_list = rsin.request_post_multi_proejct_all(key_list, auth_token, None)
 
         base_dict = {}
-        print(result_list)
 
         for key_item in result_list: #키별 반복
             for item in key_item:
@@ -136,9 +139,71 @@ class vm_service():
                     base_dict[project_id]={}
                 if not original_resource_id in base_dict[project_id]:
                     base_dict[project_id][original_resource_id]={}
-                    base_dict[project_id][original_resource_id][measure_name]=measure_item
+                base_dict[project_id][original_resource_id][measure_name]=measure_item
 
         return base_dict
 
+
+    def net_data_elk_bulk(self, auth_token):
+        """sample_doc={"tx_byte":234.123,
+           "tx_packet":24623.2141,
+           "tx_drop":1.0,
+           "tx_error":1.0,
+           "rx_byte":312.532,
+           "rx_packet":123.4512,
+           "rx_drop":0.0,
+           "rx_error":0.0,
+           "@timestamp":1668941442,
+           "port_id":"a3777ca0-a3",
+           "vm_id":"2f70f301-b039-42cc-b043-1ed47011e1a8"}
+
+            샘플 데이터 구조
+        Args:
+            auth_token (string): 인증 토큰
+        """
+        result_data = self.get_network_all_proejct(auth_token)
+        send_list = []
+
+        max_index_cnt = 13 #셀로미터에서 넘져주는 시계열 데이터 최대 인덱스 갯수
+        for key in result_data.keys(): # project 반복 
+            for inkey in result_data[key].keys(): # vm 반복
+                item = result_data[key][inkey]
+                strlist = inkey.split('-')
+                vm_id = strlist[2] + "-" + strlist[3] + "-" + strlist[4] + "-" + strlist[5] + "-" + strlist[6]
+                port_id = strlist[7].replace('tab', '') + "-" + strlist[8]
+
+                in_bytes = item['vm_network.incoming.bytes']['measures']['aggregated'][-3:]
+                in_packets = item['vm_network.incoming.packets']['measures']['aggregated'][-3:]
+                in_drop = item['vm_network.incoming.packets.drop']['measures']['aggregated'][-3:]
+                in_error = item['vm_network.incoming.packets.error']['measures']['aggregated'][-3:]
+                out_bytes = item['vm_network.outgoing.bytes']['measures']['aggregated'][-3:]
+                out_packets = item['vm_network.outgoing.packets']['measures']['aggregated'][-3:]
+                out_drop = item['vm_network.outgoing.packets.drop']['measures']['aggregated'][-3:]
+                out_error = item['vm_network.outgoing.packets.error']['measures']['aggregated'][-3:]
+
+                for index in range(len(in_bytes)):
+                    _doc = {"tx_byte": in_bytes[index][2],
+                    "tx_packet":in_packets[index][2],
+                    "tx_drop":in_drop[index][2],
+                    "tx_error":in_error[index][2],
+                    "rx_byte": out_bytes[index][2],
+                    "rx_packet":out_packets[index][2],
+                    "rx_drop": out_drop[index][2],
+                    "rx_error": out_error[index][2],
+                    "@timestamp":in_bytes[index][0],
+                    "port_id": port_id,
+                    "vm_id": vm_id}
+                    send_list.append(_doc)
+
+        send_str = ''
+        meta_str = '{"index": {"_index": "vm_resource_sample"}}'
+        for item in send_list:
+            if send_str == '':
+                send_str = meta_str + '\n' + json.dumps(item) 
+            else:
+                send_str = send_str + '\n' + meta_str + '\n' + json.dumps(item) 
+
+        send_str = send_str + '\n'
+        return self.poste.post_bulk('vm_resource_sample', auth_token, send_str)
 
 

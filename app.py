@@ -8,13 +8,33 @@ openstack.enable_logging()
 
 from controller.metric import request_service as sh
 
+from apscheduler.schedulers.background import BackgroundScheduler
+
+
+
+from controller.metric import vm_service as vs
+
+sdk_conn = openstack.connect(cloud='admin')
+rs = vs.vm_service()
+
+collection_interval=60 #1분에 한번 동작
+sched = BackgroundScheduler(daemon=True)
+def elk_bulk_sender():
+    token = sdk_conn.auth_token
+    data = rs.net_data_elk_bulk(token)
+    ##전송 코드
+
+sched.add_job(elk_bulk_sender, 'interval', seconds=collection_interval)
+sched.start()
+
+
 def create_app():
     app = Flask(__name__)
-    app.sdk_connection = openstack.connect(cloud='admin')
+    app.sdk_connection = sdk_conn
     CORS(app)
 
     api = Api(app)  # Flask 객체에 Api 객체 등록
-
+    
     from controller.hello import namespace as hello
 
     api.add_namespace(hello, '/')
