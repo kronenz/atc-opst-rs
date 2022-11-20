@@ -18,15 +18,16 @@ sdk_conn = openstack.connect(cloud='admin')
 rs = vs.vm_service()
 
 collection_interval=60 #1분에 한번 동작
-sched = BackgroundScheduler(daemon=True)
+
 def elk_bulk_sender():
+    print('call elk_bulk_sender')
     token = sdk_conn.auth_token
     data = rs.net_data_elk_bulk(token)
     ##전송 코드
 
+sched = BackgroundScheduler(daemon=True)
 sched.add_job(elk_bulk_sender, 'interval', seconds=collection_interval)
 sched.start()
-
 
 def create_app():
     app = Flask(__name__)

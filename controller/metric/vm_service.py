@@ -204,6 +204,7 @@ class vm_service():
                 send_str = send_str + '\n' + meta_str + '\n' + json.dumps(item) 
 
         send_str = send_str + '\n'
+        print('post_bulk')
         return self.poste.post_bulk('vm_resource_sample', auth_token, send_str)
 
 
