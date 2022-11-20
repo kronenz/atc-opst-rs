@@ -170,7 +170,7 @@ class vm_service():
                 item = result_data[key][inkey]
                 strlist = inkey.split('-')
                 vm_id = strlist[2] + "-" + strlist[3] + "-" + strlist[4] + "-" + strlist[5] + "-" + strlist[6]
-                port_id = strlist[7].replace('tab', '') + "-" + strlist[8]
+                port_id = strlist[7].replace('tap', '') + "-" + strlist[8]
 
                 in_bytes = item['vm_network.incoming.bytes']['measures']['aggregated'][-3:]
                 in_packets = item['vm_network.incoming.packets']['measures']['aggregated'][-3:]
