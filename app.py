@@ -17,7 +17,7 @@ from controller.metric import vm_service as vs
 sdk_conn = openstack.connect(cloud='admin')
 rs = vs.vm_service()
 
-collection_interval=1 #1분에 한번 동작
+collection_interval=60 #1분에 한번 동작
 
 def elk_bulk_sender():
     print('call elk_bulk_sender')

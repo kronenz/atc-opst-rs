@@ -367,9 +367,8 @@ class vm_service():
                 work_data[clst] = nodes_path #작업목록 추가
 
         for key in work_data.keys():
-            url_list = work_data[key]
-            for url in url_list:
-                reqlist.append((url, key))
+            url = work_data[key]
+            reqlist.append((url, key))
             
         result_list = self.rs.req_cluster_multi(reqlist)
 
