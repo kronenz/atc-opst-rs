@@ -2,7 +2,7 @@ import yaml
 import pprint
 import json
 from concurrent.futures import ThreadPoolExecutor
-
+import requests
 from common import request_api as ra
 
 form_data = {
@@ -150,4 +150,16 @@ class req_service():
         with ThreadPoolExecutor(max_workers=10) as pool:
             response_list = list(pool.map(self.get_url,list_of_requests))
  
+        return response_list
+
+
+    def get_cluster_url(self, args):
+        url = args[0]
+        result = requests.get(url)
+        return (result.json(), args[1])
+
+    def req_cluster_multi(self, urllist):
+        with ThreadPoolExecutor(max_workers=10) as pool:
+            response_list = list(pool.map(self.get_cluster_url, urllist))
+        
         return response_list

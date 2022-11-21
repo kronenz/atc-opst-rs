@@ -273,7 +273,7 @@ class vm_service():
 
         for key_item in result_data: #키별 반복
             cluster_id = key_item['group']['cluster_id']
-            if cluster_id == None:
+            if cluster_id == None or cluster_id == '6422c4f4-9246-4b8a-9ee6-70bfd9afa59c':
                 pass
             else:    
                 base_list.append(cluster_id)
@@ -296,22 +296,40 @@ class vm_service():
         ip = api['ip']
         port = str(api['port'])
         first_data = {}
+        work_data = {}
         for clst in cluster_list:
+            reqlist = []
             if clst == '6422c4f4-9246-4b8a-9ee6-70bfd9afa59c':
                 pass
-            else:                
-                urlpath = 'http://' + ip + ':' + port + '/smart-cluster/' + clst
-                rsp = requests.get(urlpath)
-                rsp_json = rsp.json()
-                
-                urlpath = 'http://' + ip + ':' + port + '/smart-cluster/' + clst + '/scaling-policy'
-                scp = requests.get(urlpath)
-                spjson = scp.json()
+            else:                # 작업목록 생성
+                clst_path = 'http://' + ip + ':' + port + '/smart-cluster/' + clst
+                policy_path = 'http://' + ip + ':' + port + '/smart-cluster/' + clst + '/scaling-policy'
+                nodes_path = 'http://' + ip + ':' + port + '/smart-cluster/' + clst + '/nodes'
+                work_data[clst] = [clst_path, policy_path, nodes_path] #작업목록 추가
 
-                urlpath = 'http://' + ip + ':' + port + '/smart-cluster/' + clst + '/nodes'
-                nodes = requests.get(urlpath)
-                ndjson = nodes.json()
+        for key in work_data.keys():
+            url_list = work_data[key]
+            for url in url_list:
+                reqlist.append((url, key))
+            
+        result_list =  self.rs.req_cluster_multi(reqlist)
 
-                first_data[clst] = {'main': rsp_json, 'scaling-policy': spjson, 'nodes':ndjson}
+        key_cur = ''
+        idxcnt = 0
+        for item in result_list:
+            cluster_id = item[1]
+            in_item = item[0]
+            if cluster_id == key_cur:
+                pass
+            else:
+                if idxcnt == 0:
+                    first_data[cluster_id] = {'main': in_item}
+                elif idxcnt == 1:
+                    first_data[cluster_id] = {'policy': in_item}
+                elif idxcnt == 2:
+                    first_data[cluster_id] = {'nodes': in_item}
+                    idxcnt = 0
 
+                idxcnt = idxcnt + 1
+            
         return first_data
