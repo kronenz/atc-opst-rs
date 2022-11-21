@@ -3,7 +3,7 @@ import pprint
 import json
 from concurrent.futures import ThreadPoolExecutor
 
-from controller.metric import request_api as ra
+from common import request_api as ra
 
 form_data = {
 
@@ -15,6 +15,7 @@ class req_service():
     reqPath = 'aggregates?granularity={}&groupby=id&groupby=original_resource_id'
     host = None
     pp = None
+
     def __init__(self, yamlfile):
         """클래스 초기화시 처리명세가 담긴 yamlfile명을 입력하면
             해당 내용에 맞게 처리함 

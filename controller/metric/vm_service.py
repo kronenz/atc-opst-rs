@@ -3,13 +3,18 @@ from concurrent.futures import ThreadPoolExecutor
 from itertools import groupby
 from controller.metric import post_elk as pe
 import json
+import yaml
+import requests
 
 class vm_service():
     rs = None
     poste = None
+    cldata = None
     def __init__(self):
         self.rs = rs.req_service('vm_req_body.yaml')
         self.poste = pe.post_elk()
+        with open('cluster.yaml') as f:
+            self.cldata = yaml.load(f, Loader=yaml.FullLoader)
 
     def get_cpu(self, auth_token):
         return self.rs.request_post('vm_cpu', auth_token)
@@ -79,9 +84,6 @@ class vm_service():
 
     def get_disk_device_write_requests(self, auth_token):
         return self.rs.request_post('vm_disk.device.write.requests', auth_token)
-
-    def post_url(args):
-        return req
 
     def get_network_all(self, auth_token):
 
@@ -163,21 +165,6 @@ class vm_service():
                 base_dict[cluster_id]=measure_item
 
         return base_dict
-
-    def get_cluster_list(self, auth_token):
-        result_data = self.rs.request_post_cluster_id('vm_cpu', auth_token)  
-        
-        base_list = []
-
-        for key_item in result_data: #키별 반복
-            cluster_id = key_item['group']['cluster_id']
-            if cluster_id == None:
-                pass
-            else:    
-                base_list.append(cluster_id)
-
-        return base_list
-
 
     def cluster_cpu_data_elk_bulk(self, auth_token):
         """sample_doc={"cluster_id":6422c4f4-9246-4b8a-9ee6-70bfd9afa59c,
@@ -278,3 +265,53 @@ class vm_service():
         send_str = send_str + '\n'
         print('post_bulk_vm_resource_sample')
         return self.poste.post_bulk('vm_resource_sample', auth_token, send_str)
+
+    def get_cluster_list(self, auth_token):
+        result_data = self.rs.request_post_cluster_id('vm_cpu', auth_token)  
+        
+        base_list = []
+
+        for key_item in result_data: #키별 반복
+            cluster_id = key_item['group']['cluster_id']
+            if cluster_id == None:
+                pass
+            else:    
+                base_list.append(cluster_id)
+
+        return base_list
+
+    def get_cluster_all(self, auth_token):
+        """vm클러스터 id 목록 과 하위 데이터를 모두 반환해주는 함수
+
+        Args:
+            list (strubg): cluster_id ex):
+
+        Returns:
+            dict: 'cluster_id' : {data} 구조
+        """
+        cluster_list = self.get_cluster_list(auth_token)
+        
+        cluster = self.cldata['cluster']
+        api = cluster['api']
+        ip = api['ip']
+        port = str(api['port'])
+        first_data = {}
+        for clst in cluster_list:
+            if clst == '6422c4f4-9246-4b8a-9ee6-70bfd9afa59c':
+                pass
+            else:                
+                urlpath = 'http://' + ip + ':' + port + '/smart-cluster/' + clst
+                rsp = requests.get(urlpath)
+                rsp_json = rsp.json()
+                
+                urlpath = 'http://' + ip + ':' + port + '/smart-cluster/' + clst + '/scaling-policy'
+                scp = requests.get(urlpath)
+                spjson = scp.json()
+
+                urlpath = 'http://' + ip + ':' + port + '/smart-cluster/' + clst + '/nodes'
+                nodes = requests.get(urlpath)
+                ndjson = nodes.json()
+
+                first_data[clst] = {'main': rsp_json, 'scaling-policy': spjson, 'nodes':ndjson}
+
+        return first_data

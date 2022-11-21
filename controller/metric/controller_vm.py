@@ -200,3 +200,10 @@ class get_network_all_requests(Resource):
         auth_token = current_app.sdk_connection.auth_token
         data = rs.get_network_all_proejct(auth_token)
         return data 
+
+@vm_bp.route("/cluster_all")
+class get_cluster_all(Resource):
+    def get(self):
+        auth_token = current_app.sdk_connection.auth_token
+        data = rs.get_cluster_all(auth_token)
+        return data
