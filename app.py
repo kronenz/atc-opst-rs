@@ -18,7 +18,7 @@ sdk_conn = openstack.connect(cloud='admin')
 rs = vs.vm_service()
 
 collection_interval=60 #1분에 한번 동작
-collection_node_interval=1 #1분에 한번 동작
+collection_node_interval=20 #1분에 한번 동작
 
 def elk_bulk_sender():
     print('call elk_bulk_sender')
@@ -36,8 +36,8 @@ def cluster_node_count_bulk():
     rs.cluster_nodes_bulk(token)
 
 sched = BackgroundScheduler(daemon=True)
-#sched.add_job(elk_bulk_sender, 'interval', seconds=collection_interval)
-#sched.add_job(net_data_elk_bulk, 'interval', seconds=collection_interval)
+sched.add_job(elk_bulk_sender, 'interval', seconds=collection_interval)
+sched.add_job(net_data_elk_bulk, 'interval', seconds=collection_interval)
 sched.add_job(cluster_node_count_bulk, 'interval', seconds=collection_node_interval)
 sched.start()
 
