@@ -316,20 +316,22 @@ class vm_service():
 
         key_cur = ''
         idxcnt = 0
+
         for item in result_list:
             cluster_id = item[1]
             in_item = item[0]
-            if cluster_id == key_cur:
-                pass
-            else:
-                if idxcnt == 0:
-                    first_data[cluster_id] = {'main': in_item}
-                elif idxcnt == 1:
-                    first_data[cluster_id] = {'policy': in_item}
-                elif idxcnt == 2:
-                    first_data[cluster_id] = {'nodes': in_item}
-                    idxcnt = 0
+            if cluster_id != key_cur:
+                key_cur = cluster_id
+                first_data[cluster_id] = {}
+                
+            if idxcnt == 0:
+                first_data[cluster_id]['main'] = in_item
+            elif idxcnt == 1:
+                first_data[cluster_id]['policy'] = in_item
+            elif idxcnt == 2:
+                first_data[cluster_id]['nodes'] = in_item
+                idxcnt = 0
 
-                idxcnt = idxcnt + 1
+            idxcnt = idxcnt + 1
             
         return first_data
