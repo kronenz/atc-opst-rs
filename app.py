@@ -17,17 +17,27 @@ from controller.metric import vm_service as vs
 sdk_conn = openstack.connect(cloud='admin')
 rs = vs.vm_service()
 
-collection_interval=60 #1분에 한번 동작
+collection_interval=1 #1분에 한번 동작
 
 def elk_bulk_sender():
     print('call elk_bulk_sender')
     token = sdk_conn.auth_token
     data = rs.net_data_elk_bulk(token)
+    
+def net_data_elk_bulk():
+    print('net_data_elk_bulk')
+    token = sdk_conn.auth_token
     rs.cluster_cpu_data_elk_bulk(token)
-    ##전송 코드
+
+def cluster_node_count_bulk():
+    print('cluster_node_count_bulk')
+    token = sdk_conn.auth_token
+    rs.cluster_nodes_bulk(token)
 
 sched = BackgroundScheduler(daemon=True)
 sched.add_job(elk_bulk_sender, 'interval', seconds=collection_interval)
+sched.add_job(net_data_elk_bulk, 'interval', seconds=collection_interval)
+sched.add_job(cluster_node_count_bulk, 'interval', seconds=collection_interval)
 sched.start()
 
 def create_app():

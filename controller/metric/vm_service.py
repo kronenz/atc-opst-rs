@@ -5,6 +5,9 @@ from controller.metric import post_elk as pe
 import json
 import yaml
 import requests
+from datetime import datetime
+
+
 
 class vm_service():
     rs = None
@@ -185,7 +188,7 @@ class vm_service():
                 cpu_rate = aggregated[index][2]
                 if cpu_rate < 0.0:
                     cpu_rate = 0.0 
-                    
+
                 _doc = {"@timestamp": aggregated[index][0],
                 "cpu_use": cpu_rate,
                 "cluster_id": key}
@@ -203,7 +206,6 @@ class vm_service():
         print(send_str)
         print('post_bulk_vm_cluster_cpu_sample')
         return self.poste.post_bulk('vm_cluster_cpu_sample', auth_token, send_str)
-
 
     def net_data_elk_bulk(self, auth_token):
         """sample_doc={"tx_byte":234.123,
@@ -339,3 +341,66 @@ class vm_service():
             idxcnt = idxcnt + 1
             
         return first_data
+
+    def cluster_nodes_bulk(self, auth_token):
+        """sample_doc={"cluster_id":6422c4f4-9246-4b8a-9ee6-70bfd9afa59c,
+           "node_count":6,
+           "@timestamp":"2022-11-21T06:56:00+00:00"}
+            샘플 데이터 구조
+        Args:
+            auth_token (string): 인증 토큰
+        """
+        cluster_list = self.get_cluster_list(auth_token)
+        
+        cluster = self.cldata['cluster']
+        api = cluster['api']
+        ip = api['ip']
+        port = str(api['port'])
+        first_data = {}
+        work_data = {}
+        for clst in cluster_list:
+            reqlist = []
+            if clst == '6422c4f4-9246-4b8a-9ee6-70bfd9afa59c':
+                pass
+            else:                # 작업목록 생성
+                nodes_path = 'http://' + ip + ':' + port + '/smart-cluster/' + clst + '/nodes'
+                work_data[clst] = nodes_path #작업목록 추가
+
+        for key in work_data.keys():
+            url_list = work_data[key]
+            for url in url_list:
+                reqlist.append((url, key))
+            
+        result_list = self.rs.req_cluster_multi(reqlist)
+
+        key_cur = ''
+        idxcnt = 0
+
+        # get current datetime
+        today = datetime.now()
+        # Get current ISO 8601 datetime in string format
+        iso_date = today.isoformat()
+        print('ISO DateTime:', iso_date)
+
+        send_list = []
+        for item in result_list:
+            cluster_id = item[1]
+            in_item = item[0]
+            node_count = len(in_item)
+            _doc = {"node_count": node_count,
+                    "@timestamp": iso_date,
+                    "cluster_id": cluster_id}
+
+            send_list.append(_doc)
+
+        send_str = ''
+        meta_str = '{"index": {"_index": "vm_cluster_node_count_sample"}}'
+        for item in send_list:
+            if send_str == '':
+                send_str = meta_str + '\n' + json.dumps(item) 
+            else:
+                send_str = send_str + '\n' + meta_str + '\n' + json.dumps(item) 
+
+        send_str = send_str + '\n'
+
+        return self.poste.post_bulk('vm_cluster_node_count_sample', auth_token, send_str)
