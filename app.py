@@ -23,6 +23,7 @@ def elk_bulk_sender():
     print('call elk_bulk_sender')
     token = sdk_conn.auth_token
     data = rs.net_data_elk_bulk(token)
+    rs.cluster_cpu_data_elk_bulk(token)
     ##전송 코드
 
 sched = BackgroundScheduler(daemon=True)

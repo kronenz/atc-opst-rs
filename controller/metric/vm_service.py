@@ -179,7 +179,7 @@ class vm_service():
         return base_list
 
 
-    def clster_cpu_data_elk_bulk(self, auth_token):
+    def cluster_cpu_data_elk_bulk(self, auth_token):
         """sample_doc={"cluster_id":6422c4f4-9246-4b8a-9ee6-70bfd9afa59c,
            "cpu_use":0.224999,
            "@timestamp":"2022-11-21T06:56:00+00:00"}
@@ -209,8 +209,9 @@ class vm_service():
                 send_str = send_str + '\n' + meta_str + '\n' + json.dumps(item) 
 
         send_str = send_str + '\n'
-        print('post_bulk')
-        return self.poste.post_bulk('vm_resource_sample', auth_token, send_str)
+        print(send_str)
+        print('post_bulk_vm_cluster_cpu_sample')
+        return self.poste.post_bulk('vm_cluster_cpu_sample', auth_token, send_str)
 
 
     def net_data_elk_bulk(self, auth_token):
@@ -275,5 +276,5 @@ class vm_service():
                 send_str = send_str + '\n' + meta_str + '\n' + json.dumps(item) 
 
         send_str = send_str + '\n'
-        print('post_bulk')
+        print('post_bulk_vm_resource_sample')
         return self.poste.post_bulk('vm_resource_sample', auth_token, send_str)
