@@ -24,6 +24,26 @@ class req_service():
         with open(yamlfile) as f:
             self.host = yaml.load(f, Loader=yaml.FullLoader)
 
+
+    def request_post_cluster_id(self,key, auth_token):
+        """request_name과 인증토큰을 입력하면 해당 요청에 필요한 jsonBody를 불러와 post요청후
+            REST API 요청후 JsonResponse값 반환
+
+        Args:
+            key (string)): Ex) Host_hardware.cpu.load.15min
+            auth_token (string): 오픈스택 admin 인증토큰값 
+
+        Returns:
+            json: JsonResponse 값
+        """
+        item = self.host[key]
+        jsonBody = item['body']
+        granularity = item['granularity']
+        self.reqPath = 'aggregates?granularity={}&groupby=cluster_id'
+        self.reqPath = self.reqPath.format(granularity)
+        resultJson = self.rapi.post_with_x_auth(self.reqPath, auth_token, jsonBody)
+        return resultJson
+
     def request_post(self,key, auth_token):
         """request_name과 인증토큰을 입력하면 해당 요청에 필요한 jsonBody를 불러와 post요청후
             REST API 요청후 JsonResponse값 반환

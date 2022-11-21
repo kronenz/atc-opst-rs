@@ -18,6 +18,21 @@ class get_cpu(Resource):
         data = rs.get_cpu(auth_token)
         return jsonify(data)
 
+@vm_bp.route("/cluster/cpu") # 클러스터별 cpu 사용량 조회
+class get_cluster_cpu(Resource):
+    def get(self):
+        auth_token = current_app.sdk_connection.auth_token
+        data = rs.get_cluster_cpu(auth_token)
+        return data
+
+@vm_bp.route("/clusterlist") # 클러스터별 cpu 사용량 조회
+class get_cluster_list(Resource):
+    def get(self):
+        auth_token = current_app.sdk_connection.auth_token
+        data = rs.get_cluster_list(auth_token)
+        return data
+
+
 @vm_bp.route("/vcpus")
 class get_vcpus(Resource):
     def get(self):

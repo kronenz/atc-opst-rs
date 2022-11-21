@@ -144,6 +144,75 @@ class vm_service():
         return base_dict
 
 
+   
+    def get_cluster_cpu(self, auth_token):
+        result_data = self.rs.request_post_cluster_id('vm_cpu', auth_token)  
+        
+        base_dict = {}
+
+        for key_item in result_data: #키별 반복
+            cluster_id = key_item['group']['cluster_id']
+            if cluster_id == None:
+                pass
+            else:    
+                measure_item = key_item['measures']
+
+                if not cluster_id in base_dict:
+                    base_dict[cluster_id]={}
+
+                base_dict[cluster_id]=measure_item
+
+        return base_dict
+
+    def get_cluster_list(self, auth_token):
+        result_data = self.rs.request_post_cluster_id('vm_cpu', auth_token)  
+        
+        base_list = []
+
+        for key_item in result_data: #키별 반복
+            cluster_id = key_item['group']['cluster_id']
+            if cluster_id == None:
+                pass
+            else:    
+                base_list.append(cluster_id)
+
+        return base_list
+
+
+    def clster_cpu_data_elk_bulk(self, auth_token):
+        """sample_doc={"cluster_id":6422c4f4-9246-4b8a-9ee6-70bfd9afa59c,
+           "cpu_use":0.224999,
+           "@timestamp":"2022-11-21T06:56:00+00:00"}
+            샘플 데이터 구조
+        Args:
+            auth_token (string): 인증 토큰
+        """
+        result_data = self.get_cluster_cpu(auth_token)
+        send_list = []
+
+        for key in result_data.keys(): # project 반복 
+        
+            aggregated = result_data[key]['measures']['aggregated'][-3:]
+
+            for index in range(len(aggregated)):
+                _doc = {"@timestamp": aggregated[index][0],
+                "cpu_use":aggregated[index][2],
+                "cluster_id": key}
+                send_list.append(_doc)
+
+        send_str = ''
+        meta_str = '{"index": {"_index": "vm_cluster_cpu_sample"}}'
+        for item in send_list:
+            if send_str == '':
+                send_str = meta_str + '\n' + json.dumps(item) 
+            else:
+                send_str = send_str + '\n' + meta_str + '\n' + json.dumps(item) 
+
+        send_str = send_str + '\n'
+        print('post_bulk')
+        return self.poste.post_bulk('vm_resource_sample', auth_token, send_str)
+
+
     def net_data_elk_bulk(self, auth_token):
         """sample_doc={"tx_byte":234.123,
            "tx_packet":24623.2141,
@@ -159,12 +228,14 @@ class vm_service():
 
             샘플 데이터 구조
         Args:
-            auth_token (string): 인증 토큰
+            auth_token (_type_): _description_
+
+        Returns:
+            _type_: _description_
         """
         result_data = self.get_network_all_proejct(auth_token)
         send_list = []
 
-        max_index_cnt = 13 #셀로미터에서 넘져주는 시계열 데이터 최대 인덱스 갯수
         for key in result_data.keys(): # project 반복 
             for inkey in result_data[key].keys(): # vm 반복
                 item = result_data[key][inkey]
@@ -206,5 +277,3 @@ class vm_service():
         send_str = send_str + '\n'
         print('post_bulk')
         return self.poste.post_bulk('vm_resource_sample', auth_token, send_str)
-
-
