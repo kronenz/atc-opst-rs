@@ -182,8 +182,12 @@ class vm_service():
             aggregated = result_data[key]['measures']['aggregated'][-3:]
 
             for index in range(len(aggregated)):
+                cpu_rate = aggregated[index][2]
+                if cpu_rate < 0.0:
+                    cpu_rate = 0.0 
+                    
                 _doc = {"@timestamp": aggregated[index][0],
-                "cpu_use":aggregated[index][2],
+                "cpu_use": cpu_rate,
                 "cluster_id": key}
                 send_list.append(_doc)
 
@@ -323,7 +327,7 @@ class vm_service():
             if cluster_id != key_cur:
                 key_cur = cluster_id
                 first_data[cluster_id] = {}
-                
+
             if idxcnt == 0:
                 first_data[cluster_id]['main'] = in_item
             elif idxcnt == 1:
