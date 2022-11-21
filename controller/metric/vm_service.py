@@ -375,10 +375,7 @@ class vm_service():
         key_cur = ''
         idxcnt = 0
 
-        # get current datetime
-        today = datetime.now()
-        # Get current ISO 8601 datetime in string format
-        iso_date = today.isoformat()
+        milliseconds_since_epoch = datetime.datetime.now().timestamp() * 1000
         print('ISO DateTime:', iso_date)
 
         send_list = []
@@ -387,7 +384,7 @@ class vm_service():
             in_item = item[0]
             node_count = len(in_item)
             _doc = {"node_count": node_count,
-                    "@timestamp": iso_date,
+                    "@timestamp": milliseconds_since_epoch,
                     "cluster_id": cluster_id}
 
             send_list.append(_doc)
