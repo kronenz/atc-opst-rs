@@ -375,8 +375,8 @@ class vm_service():
         key_cur = ''
         idxcnt = 0
 
-        milliseconds_since_epoch = datetime.datetime.now().timestamp() * 1000
-        print('ISO DateTime:', iso_date)
+        milliseconds_since_epoch = datetime.now().timestamp() * 1000
+        print('DateTime:', milliseconds_since_epoch)
 
         send_list = []
         for item in result_list:
