@@ -377,14 +377,14 @@ class vm_service():
 
         milliseconds_since_epoch = datetime.now().timestamp() * 1000
         print('DateTime:', milliseconds_since_epoch)
-
+        
         send_list = []
         for item in result_list:
             cluster_id = item[1]
             in_item = item[0]
             node_count = len(in_item)
             _doc = {"node_count": node_count,
-                    "@timestamp": milliseconds_since_epoch,
+                    "@timestamp": int(milliseconds_since_epoch),
                     "cluster_id": cluster_id}
 
             send_list.append(_doc)
