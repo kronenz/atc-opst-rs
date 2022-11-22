@@ -36,9 +36,9 @@ def cluster_node_count_bulk():
     rs.cluster_nodes_bulk(token)
 
 sched = BackgroundScheduler(daemon=True)
-sched.add_job(elk_bulk_sender, 'interval', seconds=collection_interval)
-sched.add_job(net_data_elk_bulk, 'interval', seconds=collection_interval)
-sched.add_job(cluster_node_count_bulk, 'interval', seconds=collection_node_interval)
+# sched.add_job(elk_bulk_sender, 'interval', seconds=collection_interval)
+# sched.add_job(net_data_elk_bulk, 'interval', seconds=collection_interval)
+# sched.add_job(cluster_node_count_bulk, 'interval', seconds=collection_node_interval)
 sched.start()
 
 def create_app():

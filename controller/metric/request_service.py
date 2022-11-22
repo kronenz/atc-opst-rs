@@ -59,8 +59,8 @@ class req_service():
         item = self.host[key]
         jsonBody = item['body']
         granularity = item['granularity']
-        self.reqPath = self.reqPath.format(granularity)
-        resultJson = self.rapi.post_with_x_auth(self.reqPath, auth_token, jsonBody)
+        base_path = self.reqPath.format(granularity)
+        resultJson = self.rapi.post_with_x_auth(base_path, auth_token, jsonBody)
         return resultJson
 
     def request_post_st(self,key, auth_token, start_time):
@@ -78,10 +78,13 @@ class req_service():
         item = self.host[key]
         jsonBody = item['body']
         granularity = item['granularity']
-        self.reqPath = self.reqPath.format(granularity) + '&start=' + start_time
-      
-        resultJson = self.rapi.post_with_x_auth(self.reqPath, auth_token, jsonBody)
-
+        base_path = self.reqPath
+        base_path = base_path.format(granularity) + '&start='
+        print(self.reqPath)
+        base_path += start_time
+        print(self.reqPath)
+        resultJson = self.rapi.post_with_x_auth(base_path, auth_token, jsonBody)
+        
         return resultJson
 
     def get_url(self, args):
@@ -103,6 +106,7 @@ class req_service():
         Returns:
             json:  JsonResponse 값
         """
+        base_path = ''
         list_of_requests = []
         for ob in key_list:
             item = self.host[ob]
@@ -110,11 +114,11 @@ class req_service():
             granularity = item['granularity']
 
             if start_time is None:
-                self.reqPath = self.reqPath.format(granularity)
+                base_path = self.reqPath.format(granularity)
             else:
-                self.reqPath = self.reqPath.format(granularity) + '&start=' + start_time
+                base_path = self.reqPath.format(granularity) + '&start=' + start_time
                 
-            list_of_requests.append((self.reqPath, auth_token,jsonBody, ob))
+            list_of_requests.append((base_path, auth_token,jsonBody, ob))
 
         with ThreadPoolExecutor(max_workers=10) as pool:
             response_list = list(pool.map(self.get_url,list_of_requests))
@@ -134,6 +138,7 @@ class req_service():
         Returns:
             json:  JsonResponse 값
         """
+        base_path = ''
         list_of_requests = []
         for ob in key_list:
             item = self.host[ob]
@@ -141,11 +146,11 @@ class req_service():
             granularity = item['granularity']
 
             if start_time is None:
-                self.reqPath = self.reqPath.format(granularity) + '&groupby=project_id'
+                base_path = self.reqPath.format(granularity) + '&groupby=project_id'
             else:
-                self.reqPath = self.reqPath.format(granularity) + '&groupby=project_id' + '&start=' + start_time
+                base_path = self.reqPath.format(granularity) + '&groupby=project_id' + '&start=' + start_time
                 
-            list_of_requests.append((self.reqPath, auth_token,jsonBody, ob))
+            list_of_requests.append((base_path, auth_token,jsonBody, ob))
 
         with ThreadPoolExecutor(max_workers=10) as pool:
             response_list = list(pool.map(self.get_url,list_of_requests))

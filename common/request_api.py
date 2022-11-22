@@ -34,5 +34,6 @@ class request_api:
 
         url = self.base_url + path
         headers = {'X-Auth-Token': auth_token}
+        print(url)
         r=requests.post(url, headers=headers, json=jsonBody)
         return (json.loads(r.text))
