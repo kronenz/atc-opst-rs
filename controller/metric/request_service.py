@@ -40,9 +40,9 @@ class req_service():
         item = self.host[key]
         jsonBody = item['body']
         granularity = item['granularity']
-        self.reqPath = 'aggregates?granularity={}&groupby=cluster_id'
-        self.reqPath = self.reqPath.format(granularity)
-        resultJson = self.rapi.post_with_x_auth(self.reqPath, auth_token, jsonBody)
+        clsPath = 'aggregates?granularity={}&groupby=cluster_id'
+        clsPath = clsPath.format(granularity)
+        resultJson = self.rapi.post_with_x_auth(clsPath, auth_token, jsonBody)
         return resultJson
 
     def request_post(self,key, auth_token):
@@ -60,6 +60,7 @@ class req_service():
         jsonBody = item['body']
         granularity = item['granularity']
         base_path = self.reqPath.format(granularity)
+        print(base_path)
         resultJson = self.rapi.post_with_x_auth(base_path, auth_token, jsonBody)
         return resultJson
 
