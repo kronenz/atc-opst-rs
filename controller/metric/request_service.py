@@ -99,14 +99,14 @@ class req_service():
         item = self.host[key]
         jsonBody = item['body']
         granularity = item['granularity']
-        base_path = reqPath = 'aggregates?granularity={}&groupby=id'
+        ##base_path = 'aggregates?granularity={}&groupby=id&groupby=original_resource_id' 
+        base_path = 'aggregates?granularity={}&groupby=id&groupby=original_resource_id'
         base_path = base_path.format(granularity) + '&start='
-        print(self.reqPath)
         base_path += start_time
         base_path += '&end='+ end_time
-        print(self.reqPath)
+        print(base_path)
         resultJson = self.rapi.post_with_x_auth(base_path, auth_token, jsonBody)
-        
+        print(resultJson)
         return resultJson
 
     def get_url(self, args):
