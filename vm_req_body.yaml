@@ -498,7 +498,7 @@ vm_disk.device.usage:
         ]
     }
   }
-  granularity: 600
+  granularity: 300
   
 vm_disk.device.read.bytes:
   body: {
@@ -697,4 +697,5 @@ vm_disk.device.write.requests:
     }
   }
   granularity: 60
+
 
