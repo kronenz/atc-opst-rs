@@ -84,7 +84,7 @@ class req_service():
         resultJson = self.rapi.post_with_x_auth(base_path, auth_token, jsonBody)
         return resultJson
 
-    def request_post_st(self,key, auth_token, start_time):
+    def request_post_st(self,key, auth_token, start_time, end_time):
         """_summary_ 수집시점과 함꼐 request_name과 인증토큰을 입력하면 해당 요청에 필요한 jsonBody를 불러와 post요청후
             REST API 요청후 JsonResponse값 반환
 
@@ -103,6 +103,7 @@ class req_service():
         base_path = base_path.format(granularity) + '&start='
         print(self.reqPath)
         base_path += start_time
+        base_path += '&end='+ end_time
         print(self.reqPath)
         resultJson = self.rapi.post_with_x_auth(base_path, auth_token, jsonBody)
         
