@@ -274,6 +274,34 @@ hardware.network.outgoing.bytes:
   }
   granularity: 60
 
+hardware.network.outgoing.errors: 
+  body: {
+    "operations": [
+        "/",
+        [
+            "aggregate",
+            "rate:mean",
+            [
+                "metric",
+                "hardware.network.outgoing.errors",
+                "mean"
+            ]
+        ],
+        60
+    ],
+    "resource_type": "host_network_interface",
+    "search": {
+        "and": [
+            {
+                "=": {
+                    "ended_at": null
+                }
+            }
+        ]
+    }
+  }
+  granularity: 60
+
 hardware.disk.size.total: 
   body: {
     "operations": [

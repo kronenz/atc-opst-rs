@@ -64,6 +64,26 @@ class req_service():
         resultJson = self.rapi.post_with_x_auth(base_path, auth_token, jsonBody)
         return resultJson
 
+    def request_post_host(self,key, auth_token):
+        """request_name과 인증토큰을 입력하면 해당 요청에 필요한 jsonBody를 불러와 post요청후
+            REST API 요청후 JsonResponse값 반환
+
+        Args:
+            key (string)): Ex) Host_hardware.cpu.load.15min
+            auth_token (string): 오픈스택 admin 인증토큰값 
+
+        Returns:
+            json: JsonResponse 값
+        """
+        item = self.host[key]
+        jsonBody = item['body']
+        granularity = item['granularity']
+        base_path = 'aggregates?granularity={}&groupby=id'
+        base_path = base_path.format(granularity)
+        print(base_path)
+        resultJson = self.rapi.post_with_x_auth(base_path, auth_token, jsonBody)
+        return resultJson
+
     def request_post_st(self,key, auth_token, start_time):
         """_summary_ 수집시점과 함꼐 request_name과 인증토큰을 입력하면 해당 요청에 필요한 jsonBody를 불러와 post요청후
             REST API 요청후 JsonResponse값 반환
@@ -79,7 +99,7 @@ class req_service():
         item = self.host[key]
         jsonBody = item['body']
         granularity = item['granularity']
-        base_path = self.reqPath
+        base_path = reqPath = 'aggregates?granularity={}&groupby=id'
         base_path = base_path.format(granularity) + '&start='
         print(self.reqPath)
         base_path += start_time
