@@ -116,7 +116,7 @@ hardware.memory.buffer:
         ]
     }
   }
-  granularity: 20
+  granularity: 60
 
 hardware.memory.cached: 
   body: {
@@ -136,7 +136,7 @@ hardware.memory.cached:
         ]
     }
   }
-  granularity: 20
+  granularity: 60
 
 hardware.memory.swap.avail: 
   body: {
@@ -156,7 +156,7 @@ hardware.memory.swap.avail:
         ]
     }
   }
-  granularity: 20
+  granularity: 300
 
 hardware.memory.swap.total: 
   body: {
@@ -176,7 +176,7 @@ hardware.memory.swap.total:
         ]
     }
   }
-  granularity: 20
+  granularity: 300
 
 hardware.memory.total: 
   body: {
@@ -196,7 +196,7 @@ hardware.memory.total:
         ]
     }
   }
-  granularity: 20
+  granularity: 300
 
 hardware.memory.used: 
   body: {
@@ -216,7 +216,7 @@ hardware.memory.used:
         ]
     }
   }
-  granularity: 20
+  granularity: 60
 
 hardware.network.incoming.bytes: 
   body: {
@@ -320,7 +320,7 @@ hardware.disk.size.total:
         ]
     }
   }
-  granularity: 60
+  granularity: 300
  
 hardware.disk.size.used: 
   body: {
@@ -340,6 +340,6 @@ hardware.disk.size.used:
         ]
     }
   }
-  granularity: 60
+  granularity: 300
 
 

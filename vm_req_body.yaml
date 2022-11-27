@@ -448,7 +448,7 @@ vm_disk.device.allocation:
         ]
     }
   }
-  granularity: 20
+  granularity: 300
   
 vm_disk.device.capacity:
   body: {
@@ -473,7 +473,7 @@ vm_disk.device.capacity:
         ]
     }
   }
-  granularity: 20
+  granularity: 300
   
 vm_disk.device.usage:
   body: {
@@ -498,7 +498,7 @@ vm_disk.device.usage:
         ]
     }
   }
-  granularity: 20
+  granularity: 600
   
 vm_disk.device.read.bytes:
   body: {
