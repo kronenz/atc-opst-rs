@@ -89,18 +89,25 @@ class get_net_out_bytes(Resource):
         data = rs.get_net_out_bytes(auth_token)
         return jsonify(data) 
 
-@vm_bp.route("/net_out_packtes_drop")
-class get_net_out_packtes_drop(Resource):
+@vm_bp.route("/net_out_packets")
+class get_net_out_packets(Resource):
     def get(self):
         auth_token = current_app.sdk_connection.auth_token
-        data = rs.get_net_out_packtes_drop(auth_token)
+        data = rs.get_net_out_packets(auth_token)
+        return jsonify(data) 
+
+@vm_bp.route("/net_out_packets_drop")
+class get_net_out_packets_drop(Resource):
+    def get(self):
+        auth_token = current_app.sdk_connection.auth_token
+        data = rs.net_out_packets_drop(auth_token)
         return jsonify(data) 
 
 @vm_bp.route("/net_out_packtes_error")
-class get_net_out_packtes_error(Resource):
+class get_net_out_packets_error(Resource):
     def get(self):
         auth_token = current_app.sdk_connection.auth_token
-        data = rs.get_net_out_packtes_error(auth_token)
+        data = rs.get_net_out_packets_error(auth_token)
         return jsonify(data) 
 
 @vm_bp.route("/net_out_packtes")

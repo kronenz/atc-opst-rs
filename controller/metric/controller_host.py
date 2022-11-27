@@ -107,11 +107,11 @@ class get_net_out_bytes(Resource):
         data = rs.get_net_out_bytes(auth_token) 
         return jsonify(data)  
 
-@host_bp.route("/net_out_error")
+@host_bp.route("/net_out_errors")
 class get_net_out_bytes(Resource):
     def get(self):
         auth_token = current_app.sdk_connection.auth_token
-        data = rs.get_net_out_bytes(auth_token) 
+        data = rs.get_net_out_error(auth_token) 
         return jsonify(data)  
 
 @host_bp.route("/disk_size_total")

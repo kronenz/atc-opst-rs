@@ -46,10 +46,13 @@ class vm_service():
     def get_net_out_bytes(self, auth_token):
         return self.rs.request_post('vm_network.outgoing.bytes', auth_token)
 
-    def get_net_out_packtes_drop(self, auth_token):
+    def get_net_out_packets(self, auth_token):
+        return self.rs.request_post('vm_network.outgoing.packets', auth_token)
+
+    def get_net_out_packets_drop(self, auth_token):
         return self.rs.request_post('vm_network.outgoing.packets.drop', auth_token)
 
-    def get_net_out_packtes_error(self, auth_token):
+    def get_net_out_packets_error(self, auth_token):
         return self.rs.request_post('vm_network.outgoing.packets.error', auth_token)
 
     def get_net_out_packtes(self, auth_token):
